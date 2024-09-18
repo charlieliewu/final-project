@@ -30,7 +30,7 @@ def emotion_detector(text_to_analyze): 
 
 # Test code
 if __name__ == "__main__":
-    test_text = "I like this new technology。"
-    result = emotion_detector(test_text)  
-    print(result)
+    result = emotion_detector("I like this new technology")
+print(result)
+
 
