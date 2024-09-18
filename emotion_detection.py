@@ -15,7 +15,7 @@ def emotion_detector(text_to_analyze): 
     # input json
     input_json = {
         "raw_document": {
-            "text": text_to_analyze
+            "text": text_to_analyze  
         }
     }
 
@@ -30,7 +30,8 @@ def emotion_detector(text_to_analyze): 
 
 # Test code
 if __name__ == "__main__":
-    result = emotion_detector("I like this new technology")
-print(result)
+    test_text = "I like this new technology."
+    result = emotion_detector(test_text)
+    print(result)
 
 
