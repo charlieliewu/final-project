@@ -1,29 +1,36 @@
-# emotion_detection.py
+import requests
+import json
 
-# Assuming you have an emotion detection module or API function available, let's import it.    
-# For example, we assume there is a function named detect_emotion that processes the text.
-
-# Example: from some_emotion_detection_module import detect_emotion
-
-# Function to perform emotion detection
-def emotion_detector(text_to_analyze):
-    """
-    This function takes text as input and returns the detected emotion based on the
-    emotion detection function.
+# Emotion Detection Function        
+def emotion_detector(text_to_analyze):  
+    # Watson NLP Emotion Detection API URL
+    url = 'https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict'  
     
-    :param text_to_analyze: The text that needs to be analyzed for emotion.
-    :return: The detected emotion text.
-    """
-    # Call the emotion detection function (assume it's called detect_emotion)
-    # The response object from this function has a `text` attribute that holds the result.
+    # requests
+    headers = {
+        "grpc-metadata-mm-model-id": "emotion_aggregated-workflow_lang_en_stock",    
+        "Content-Type": "application/json"
+    }
     
-    response = detect_emotion(text_to_analyze)
-    
-    # Return the emotion text from the response object  
-    return response.text
+    # input json
+    input_json = {
+        "raw_document": {
+            "text": text_to_analyze
+        }
+    }
 
-# Example usage (This part is not necessary in the file, but here to demonstrate usage)
+    # Sending a POST request
+    response = requests.post(url, headers=headers, data=json.dumps(input_json))    
+    
+    # Returns the text attribute in the response
+    if response.status_code == 200:
+        return response.json()  
+    else:
+        return {"error": "Failed to fetch emotion prediction"}  
+
+# Test code
 if __name__ == "__main__":
-    sample_text = "I am feeling really happy today!"
-    emotion = emotion_detector(sample_text)
-    print(f"Detected Emotion: {emotion}")
+    test_text = "I like this new technology。"
+    result = emotion_detector(test_text)  
+    print(result)
+
